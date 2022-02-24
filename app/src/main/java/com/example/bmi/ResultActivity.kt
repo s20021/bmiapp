@@ -3,8 +3,10 @@ package com.example.bmi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import org.w3c.dom.Text
 
@@ -18,19 +20,26 @@ class ResultActivity : AppCompatActivity() {
         var indexresult_text: TextView = findViewById(R.id.textView3L)
         var indexresult:TextView = findViewById(R.id.textView3R)
         var judge_text: TextView = findViewById(R.id.textView4R)
+        var weight_text: TextView = findViewById(R.id.textView5R)
+        var nomal_weight_text: TextView = findViewById(R.id.textView6R)
         val backbutton: ImageButton = findViewById(R.id.backButton)
+        val nw_layout: LinearLayout = findViewById(R.id.view6layout)
+        val age_layout: LinearLayout = findViewById(R.id.view1layout)
 
         val age = intent.getStringExtra("age")?.toIntOrNull()
         val height = intent.getStringExtra("height")?.toDouble() ?: 0.0
         val weight = intent.getStringExtra("weight")?.toDouble() ?: 0.0
 
+        weight_text.setText(weight.toString())
+
         if (age == null) {
             val result = bmiResult(height, weight)
-            age_text.setText("- - -")
             index_text.setText("ボディマス指数")
             indexresult_text.setText("BMI値")
             indexresult.setText(result.toString())
             judge_text.setText(bmiJudge(result))
+            nomal_weight_text.setText(nweightResult(height).toString())
+            age_layout.visibility = View.GONE
         } else {
             age_text.setText(age.toString())
             if(age >= 18){
@@ -39,16 +48,19 @@ class ResultActivity : AppCompatActivity() {
                 indexresult_text.setText("BMI値")
                 indexresult.setText(result.toString())
                 judge_text.setText(bmiJudge(result))
+                nomal_weight_text.setText(nweightResult(height).toString())
             } else if(age >= 6){
                 val result = laurelResult(height, weight)
                 index_text.setText("ローレル指数")
                 indexresult.setText(result.toString())
                 judge_text.setText(laurelJudge(result))
+                nw_layout.visibility = View.GONE
             } else {
                 val result = kaupResult(height, weight)
                 index_text.setText("カウプ指数")
                 indexresult.setText(result.toString())
                 judge_text.setText(kaupJudge(result))
+                nw_layout.visibility = View.GONE
             }
         }
 
@@ -69,6 +81,11 @@ class ResultActivity : AppCompatActivity() {
     }
     fun kaupResult(height : Double, weight : Double) : Double{
         val result = weight / Math.pow(height * 0.01, 2.0)
+        return (Math.floor(result * 100.0) / 100.0)
+    }
+
+    fun nweightResult(height: Double) : Double {
+        val result = Math.pow(height * 0.01, 2.0) * 22.0
         return (Math.floor(result * 100.0) / 100.0)
     }
 

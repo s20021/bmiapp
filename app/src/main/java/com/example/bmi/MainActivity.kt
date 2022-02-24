@@ -47,11 +47,11 @@ class MainActivity : AppCompatActivity() {
             return false
         }
 
-        val int_hw = hw.text.toString().toIntOrNull()
+        val int_hw = hw.text.toString().toDoubleOrNull()
 
         if(int_hw == null){
             hw.requestFocus()
-            Toast.makeText(applicationContext, "整数で値を入力してください", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "数値を入力してください", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -66,11 +66,11 @@ class MainActivity : AppCompatActivity() {
     fun ageInputCheck(age : EditText) : Boolean {
         if(age.text.length == 0) {return true}
 
-        val int_age = age.text.toString().toIntOrNull()
+        val int_age = age.text.toString().toDoubleOrNull()
 
         if(int_age == null) {
             age.requestFocus()
-            Toast.makeText(applicationContext, "整数で値を入力してください", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "数値を入力してください", Toast.LENGTH_SHORT).show()
             return false
         }
 
