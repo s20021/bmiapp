@@ -30,7 +30,7 @@ class ResultActivity : AppCompatActivity() {
         val height = intent.getStringExtra("height")?.toDouble() ?: 0.0
         val weight = intent.getStringExtra("weight")?.toDouble() ?: 0.0
 
-        weight_text.setText(weight.toString())
+        weight_text.setText((Math.floor(weight * 100.0) / 100).toString() + " kg")
 
         if (age == null) {
             val result = bmiResult(height, weight)
@@ -38,7 +38,7 @@ class ResultActivity : AppCompatActivity() {
             indexresult_text.setText("BMI値")
             indexresult.setText(result.toString())
             judge_text.setText(bmiJudge(result))
-            nomal_weight_text.setText(nweightResult(height).toString())
+            nomal_weight_text.setText(nweightResult(height).toString() + " kg")
             age_layout.visibility = View.GONE
         } else {
             age_text.setText(age.toString())
@@ -48,7 +48,7 @@ class ResultActivity : AppCompatActivity() {
                 indexresult_text.setText("BMI値")
                 indexresult.setText(result.toString())
                 judge_text.setText(bmiJudge(result))
-                nomal_weight_text.setText(nweightResult(height).toString())
+                nomal_weight_text.setText(nweightResult(height).toString() + " kg")
             } else if(age >= 6){
                 val result = laurelResult(height, weight)
                 index_text.setText("ローレル指数")
@@ -86,7 +86,7 @@ class ResultActivity : AppCompatActivity() {
 
     fun nweightResult(height: Double) : Double {
         val result = Math.pow(height * 0.01, 2.0) * 22.0
-        return (Math.floor(result * 100.0) / 100.0)
+        return (Math.floor(result * 10.0) / 10.0)
     }
 
     fun bmiJudge(bmiindex : Double) : String{
